@@ -1,17 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Medical Dataset Collection</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: #eef4f9;
       margin: 0;
       padding: 25px;
+      color: #243447;
     }
+
     .container {
       max-width: 520px;
       margin: auto;
@@ -20,143 +26,445 @@
       border-radius: 12px;
       box-shadow: 0 3px 12px #ccd5df;
     }
-    h1 { color: #075985; font-size: 24px; }
-    label { display: block; margin-top: 14px; }
-    input, select, button {
-      box-sizing: border-box;
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
+
+    h1 {
+      color: #075985;
+      font-size: 24px;
+      text-align: center;
     }
+
+    .description {
+      color: #526579;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+
+    input,
+    select {
+      border: 1px solid #cbd5e1;
+      background: #fff;
+    }
+
+    input:focus,
+    select:focus {
+      outline: 2px solid #0878d1;
+      border-color: #0878d1;
+    }
+
     button {
       border: 0;
-      border-radius: 6px;
       background: #0878d1;
       color: white;
       cursor: pointer;
-      margin-top: 18px;
+      margin-top: 20px;
+      font-weight: bold;
     }
-    .secondary { background: #16834a; }
-    #message { color: #166534; }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .secondary {
+      background: #16834a;
+    }
+
+    #message {
+      padding: 10px;
+      border-radius: 6px;
+      overflow-wrap: anywhere;
+    }
+
+    #message.success {
+      color: #166534;
+      background: #dcfce7;
+    }
+
+    #message.error {
+      color: #b91c1c;
+      background: #fee2e2;
+    }
+
+    .hint {
+      color: #64748b;
+      font-size: 13px;
+      margin: 5px 0 0;
+    }
+
+    .counter {
+      text-align: center;
+      background: #f0f9ff;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 18px;
+      }
+    }
   </style>
 </head>
+
 <body>
+
 <div class="container">
+
   <h1>Medical Dataset Collection</h1>
-  <p>Educational project — use fictional patient records.</p>
 
-  <form id="medicalForm">
-    <label>Record ID</label>
-    <input name="record_id" type="text" required
-           placeholder="e.g. P001">
+  <p class="description">
+    Educational project — use fictional patient records only.
+  </p>
 
-    <label>Age</label>
-    <input name="age" type="number" min="0" max="120"
-           required>
+  <form id="medicalForm" novalidate>
 
-    <label>Gender</label>
-    <select name="gender" required>
+    <label for="record_id">Record ID</label>
+    <input
+      id="record_id"
+      name="record_id"
+      type="text"
+      required
+      maxlength="40"
+      autocomplete="off"
+      placeholder="e.g. P001"
+    >
+
+    <label for="age">Age (years)</label>
+    <input
+      id="age"
+      name="age"
+      type="number"
+      min="0"
+      max="120"
+      step="1"
+      required
+    >
+    <p class="hint">
+      Enter a whole number between 0 and 120.
+    </p>
+
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender" required>
       <option value="">Select</option>
-      <option>Female</option>
-      <option>Male</option>
-      <option>Other</option>
-      <option>Not specified</option>
+      <option value="Female">Female</option>
+      <option value="Male">Male</option>
+      <option value="Other">Other</option>
+      <option value="Not specified">Not specified</option>
     </select>
 
-    <label>Systolic blood pressure (mmHg)</label>
-    <input name="systolic_bp" type="number"
-           min="50" max="300" required>
+    <label for="systolic_bp">
+      Systolic blood pressure (mmHg)
+    </label>
+    <input
+      id="systolic_bp"
+      name="systolic_bp"
+      type="number"
+      min="50"
+      max="300"
+      step="1"
+      required
+    >
+    <p class="hint">
+      Enter a whole number between 50 and 300.
+    </p>
 
-    <label>Blood glucose (mg/dL)</label>
-    <input name="glucose" type="number"
-           min="20" max="700" required>
+    <label for="glucose">Blood glucose (mg/dL)</label>
+    <input
+      id="glucose"
+      name="glucose"
+      type="number"
+      min="20"
+      max="700"
+      step="any"
+      required
+    >
+    <p class="hint">
+      Enter a value between 20 and 700.
+    </p>
 
-    <label>Medical risk category (educational label)</label>
-    <select name="risk_category" required>
+    <label for="risk_category">
+      Medical risk category (educational label)
+    </label>
+    <select
+      id="risk_category"
+      name="risk_category"
+      required
+    >
       <option value="">Select</option>
-      <option>Low</option>
-      <option>Medium</option>
-      <option>High</option>
-      <option>Unknown</option>
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+      <option value="Unknown">Unknown</option>
     </select>
 
     <button type="submit">Add Record</button>
+
   </form>
 
-  <p id="message" aria-live="polite"></p>
-  <p>Records collected: <strong id="count">0</strong></p>
+  <p id="message" role="status" aria-live="polite"></p>
 
-  <button type="button" class="secondary"
-          id="downloadBtn">Download CSV Dataset</button>
+  <div class="counter">
+    Records collected:
+    <strong id="count">0</strong>
+  </div>
+
+  <button
+    type="button"
+    class="secondary"
+    id="downloadBtn"
+  >
+    Download CSV Dataset
+  </button>
+
 </div>
 
 <script>
   const records = [];
+
   const form = document.getElementById("medicalForm");
+  const message = document.getElementById("message");
+
+  const idInput = document.getElementById("record_id");
+  const ageInput = document.getElementById("age");
+  const genderInput = document.getElementById("gender");
+  const bpInput = document.getElementById("systolic_bp");
+  const glucoseInput = document.getElementById("glucose");
+  const riskInput = document.getElementById("risk_category");
+
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.className = type;
+  }
+
+  function isWholeNumber(value) {
+    return Number.isFinite(value) && Number.isInteger(value);
+  }
 
   form.addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const data = Object.fromEntries(new FormData(form));
-    const age = Number(data.age);
-    const bp = Number(data.systolic_bp);
-    const glucose = Number(data.glucose);
+    const recordID = idInput.value.trim();
+    const ageText = ageInput.value.trim();
+    const bpText = bpInput.value.trim();
+    const glucoseText = glucoseInput.value.trim();
 
-    if (records.some(r => r.record_id === data.record_id)) {
-      document.getElementById("message").textContent =
-        "This Record ID already exists.";
+    const age = Number(ageText);
+    const bp = Number(bpText);
+    const glucose = Number(glucoseText);
+
+    // 1. Required fields
+    if (
+      recordID === "" ||
+      ageText === "" ||
+      genderInput.value === "" ||
+      bpText === "" ||
+      glucoseText === "" ||
+      riskInput.value === ""
+    ) {
+      showMessage(
+        "Error: Please complete all fields.",
+        "error"
+      );
       return;
     }
 
-    if (age < 0 || age > 120 ||
-        bp < 50 || bp > 300 ||
-        glucose < 20 || glucose > 700) {
-      document.getElementById("message").textContent =
-        "Please check the measurement values.";
+    // 2. Validate Record ID length
+    if (recordID.length > 40) {
+      showMessage(
+        "Error: Record ID must not exceed 40 characters.",
+        "error"
+      );
+      idInput.focus();
       return;
     }
+
+    // 3. Validate Age
+    if (
+      !isWholeNumber(age) ||
+      age < 0 ||
+      age > 120
+    ) {
+      showMessage(
+        "Error: Age must be a whole number between 0 and 120.",
+        "error"
+      );
+      ageInput.focus();
+      return;
+    }
+
+    // 4. Validate Blood Pressure
+    if (
+      !isWholeNumber(bp) ||
+      bp < 50 ||
+      bp > 300
+    ) {
+      showMessage(
+        "Error: Systolic blood pressure must be a whole number between 50 and 300.",
+        "error"
+      );
+      bpInput.focus();
+      return;
+    }
+
+    // 5. Validate Blood Glucose
+    if (
+      !Number.isFinite(glucose) ||
+      glucose < 20 ||
+      glucose > 700
+    ) {
+      showMessage(
+        "Error: Blood glucose must be between 20 and 700 mg/dL.",
+        "error"
+      );
+      glucoseInput.focus();
+      return;
+    }
+
+    // 6. Validate Gender
+    const allowedGenders = [
+      "Female",
+      "Male",
+      "Other",
+      "Not specified"
+    ];
+
+    if (!allowedGenders.includes(genderInput.value)) {
+      showMessage(
+        "Error: Please select a valid gender.",
+        "error"
+      );
+      return;
+    }
+
+    // 7. Validate Risk Category
+    const allowedCategories = [
+      "Low",
+      "Medium",
+      "High",
+      "Unknown"
+    ];
+
+    if (!allowedCategories.includes(riskInput.value)) {
+      showMessage(
+        "Error: Please select a valid risk category.",
+        "error"
+      );
+      return;
+    }
+
+    // 8. Prevent duplicate IDs
+    const normalizedID = recordID.toLowerCase();
+
+    const duplicate = records.some(function(record) {
+      return record.record_id.toLowerCase() === normalizedID;
+    });
+
+    if (duplicate) {
+      showMessage(
+        "Error: This Record ID already exists.",
+        "error"
+      );
+      idInput.focus();
+      return;
+    }
+
+    // 9. Add the valid record
+    const data = {
+      record_id: recordID,
+      age: age,
+      gender: genderInput.value,
+      systolic_bp: bp,
+      glucose: glucose,
+      risk_category: riskInput.value
+    };
 
     records.push(data);
+
     document.getElementById("count").textContent =
       records.length;
-    document.getElementById("message").textContent =
-      "Record added successfully.";
+
+    showMessage(
+      "Record added successfully!",
+      "success"
+    );
+
     form.reset();
   });
 
+  // 10. Export records to CSV
   document.getElementById("downloadBtn")
     .addEventListener("click", function() {
+
       if (records.length === 0) {
         alert("Add at least one record first.");
         return;
       }
 
       const columns = [
-        "record_id", "age", "gender",
-        "systolic_bp", "glucose", "risk_category"
+        "record_id",
+        "age",
+        "gender",
+        "systolic_bp",
+        "glucose",
+        "risk_category"
       ];
 
-      const escapeCSV = value =>
-        '"' + String(value).replace(/"/g, '""') + '"';
+      function escapeCSV(value) {
+        return '"' +
+          String(value).replace(/"/g, '""') +
+          '"';
+      }
 
       const csv = [
         columns.join(","),
-        ...records.map(row =>
-          columns.map(col => escapeCSV(row[col])).join(",")
-        )
+        ...records.map(function(row) {
+          return columns
+            .map(function(column) {
+              return escapeCSV(row[column]);
+            })
+            .join(",");
+        })
       ].join("\r\n");
 
       const blob = new Blob(
         ["\uFEFF" + csv],
         { type: "text/csv;charset=utf-8;" }
       );
+
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
+
       link.href = url;
       link.download = "medical_dataset.csv";
+
+      document.body.appendChild(link);
       link.click();
-      URL.revokeObjectURL(url);
+      link.remove();
+
+      setTimeout(function() {
+        URL.revokeObjectURL(url);
+      }, 1000);
     });
 </script>
+
 </body>
 </html>
