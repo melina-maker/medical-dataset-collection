@@ -57,7 +57,7 @@
     input,
     select {
       border: 1px solid #cbd5e1;
-      background: #fff;
+      background: white;
     }
 
     input:focus,
@@ -158,22 +158,22 @@
       step="1"
       required
     >
+
     <p class="hint">
       Enter a whole number between 0 and 120.
     </p>
 
     <label for="gender">Gender</label>
     <select id="gender" name="gender" required>
-      <option value="">Select</option>
+      <option value="">Select gender</option>
       <option value="Female">Female</option>
       <option value="Male">Male</option>
-      <option value="Other">Other</option>
-      <option value="Not specified">Not specified</option>
     </select>
 
     <label for="systolic_bp">
       Systolic blood pressure (mmHg)
     </label>
+
     <input
       id="systolic_bp"
       name="systolic_bp"
@@ -183,11 +183,15 @@
       step="1"
       required
     >
+
     <p class="hint">
       Enter a whole number between 50 and 300.
     </p>
 
-    <label for="glucose">Blood glucose (mg/dL)</label>
+    <label for="glucose">
+      Blood glucose (mg/dL)
+    </label>
+
     <input
       id="glucose"
       name="glucose"
@@ -197,6 +201,7 @@
       step="any"
       required
     >
+
     <p class="hint">
       Enter a value between 20 and 700.
     </p>
@@ -204,12 +209,13 @@
     <label for="risk_category">
       Medical risk category (educational label)
     </label>
+
     <select
       id="risk_category"
       name="risk_category"
       required
     >
-      <option value="">Select</option>
+      <option value="">Select category</option>
       <option value="Low">Low</option>
       <option value="Medium">Medium</option>
       <option value="High">High</option>
@@ -271,7 +277,7 @@
     const bp = Number(bpText);
     const glucose = Number(glucoseText);
 
-    // 1. Required fields
+    // Check required fields
     if (
       recordID === "" ||
       ageText === "" ||
@@ -287,7 +293,7 @@
       return;
     }
 
-    // 2. Validate Record ID length
+    // Validate Record ID
     if (recordID.length > 40) {
       showMessage(
         "Error: Record ID must not exceed 40 characters.",
@@ -297,7 +303,7 @@
       return;
     }
 
-    // 3. Validate Age
+    // Validate Age
     if (
       !isWholeNumber(age) ||
       age < 0 ||
@@ -311,21 +317,21 @@
       return;
     }
 
-    // 4. Validate Blood Pressure
+    // Validate Blood Pressure
     if (
       !isWholeNumber(bp) ||
       bp < 50 ||
       bp > 300
     ) {
       showMessage(
-        "Error: Systolic blood pressure must be a whole number between 50 and 300.",
+        "Error: Blood pressure must be a whole number between 50 and 300.",
         "error"
       );
       bpInput.focus();
       return;
     }
 
-    // 5. Validate Blood Glucose
+    // Validate Blood Glucose
     if (
       !Number.isFinite(glucose) ||
       glucose < 20 ||
@@ -339,23 +345,19 @@
       return;
     }
 
-    // 6. Validate Gender
-    const allowedGenders = [
-      "Female",
-      "Male",
-      "Other",
-      "Not specified"
-    ];
+    // Validate Gender
+    const allowedGenders = ["Female", "Male"];
 
     if (!allowedGenders.includes(genderInput.value)) {
       showMessage(
-        "Error: Please select a valid gender.",
+        "Error: Please select Male or Female.",
         "error"
       );
+      genderInput.focus();
       return;
     }
 
-    // 7. Validate Risk Category
+    // Validate Risk Category
     const allowedCategories = [
       "Low",
       "Medium",
@@ -368,10 +370,11 @@
         "Error: Please select a valid risk category.",
         "error"
       );
+      riskInput.focus();
       return;
     }
 
-    // 8. Prevent duplicate IDs
+    // Prevent duplicate Record IDs
     const normalizedID = recordID.toLowerCase();
 
     const duplicate = records.some(function(record) {
@@ -387,7 +390,7 @@
       return;
     }
 
-    // 9. Add the valid record
+    // Add valid record
     const data = {
       record_id: recordID,
       age: age,
@@ -410,7 +413,7 @@
     form.reset();
   });
 
-  // 10. Export records to CSV
+  // Export CSV
   document.getElementById("downloadBtn")
     .addEventListener("click", function() {
 
