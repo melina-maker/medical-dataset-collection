@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medical Dataset Collection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef4f9;
+      margin: 0;
+      padding: 25px;
+    }
+    .container {
+      max-width: 520px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #ccd5df;
+    }
+    h1 { color: #075985; font-size: 24px; }
+    label { display: block; margin-top: 14px; }
+    input, select, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+    }
+    button {
+      border: 0;
+      border-radius: 6px;
+      background: #0878d1;
+      color: white;
+      cursor: pointer;
+      margin-top: 18px;
+    }
+    .secondary { background: #16834a; }
+    #message { color: #166534; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Medical Dataset Collection</h1>
+  <p>Educational project — use fictional patient records.</p>
+
+  <form id="medicalForm">
+    <label>Record ID</label>
+    <input name="record_id" type="text" required
+           placeholder="e.g. P001">
+
+    <label>Age</label>
+    <input name="age" type="number" min="0" max="120"
+           required>
+
+    <label>Gender</label>
+    <select name="gender" required>
+      <option value="">Select</option>
+      <option>Female</option>
+      <option>Male</option>
+      <option>Other</option>
+      <option>Not specified</option>
+    </select>
+
+    <label>Systolic blood pressure (mmHg)</label>
+    <input name="systolic_bp" type="number"
+           min="50" max="300" required>
+
+    <label>Blood glucose (mg/dL)</label>
+    <input name="glucose" type="number"
+           min="20" max="700" required>
+
+    <label>Medical risk category (educational label)</label>
+    <select name="risk_category" required>
+      <option value="">Select</option>
+      <option>Low</option>
+      <option>Medium</option>
+      <option>High</option>
+      <option>Unknown</option>
+    </select>
+
+    <button type="submit">Add Record</button>
+  </form>
+
+  <p id="message" aria-live="polite"></p>
+  <p>Records collected: <strong id="count">0</strong></p>
+
+  <button type="button" class="secondary"
+          id="downloadBtn">Download CSV Dataset</button>
+</div>
+
+<script>
+  const records = [];
+  const form = document.getElementById("medicalForm");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const data = Object.fromEntries(new FormData(form));
+    const age = Number(data.age);
+    const bp = Number(data.systolic_bp);
+    const glucose = Number(data.glucose);
+
+    if (records.some(r => r.record_id === data.record_id)) {
+      document.getElementById("message").textContent =
+        "This Record ID already exists.";
+      return;
+    }
+
+    if (age < 0 || age > 120 ||
+        bp < 50 || bp > 300 ||
+        glucose < 20 || glucose > 700) {
+      document.getElementById("message").textContent =
+        "Please check the measurement values.";
+      return;
+    }
+
+    records.push(data);
+    document.getElementById("count").textContent =
+      records.length;
+    document.getElementById("message").textContent =
+      "Record added successfully.";
+    form.reset();
+  });
+
+  document.getElementById("downloadBtn")
+    .addEventListener("click", function() {
+      if (records.length === 0) {
+        alert("Add at least one record first.");
+        return;
+      }
+
+      const columns = [
+        "record_id", "age", "gender",
+        "systolic_bp", "glucose", "risk_category"
+      ];
+
+      const escapeCSV = value =>
+        '"' + String(value).replace(/"/g, '""') + '"';
+
+      const csv = [
+        columns.join(","),
+        ...records.map(row =>
+          columns.map(col => escapeCSV(row[col])).join(",")
+        )
+      ].join("\r\n");
+
+      const blob = new Blob(
+        ["\uFEFF" + csv],
+        { type: "text/csv;charset=utf-8;" }
+      );
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "medical_dataset.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+</script>
+</body>
+</html>
