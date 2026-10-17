@@ -14,7 +14,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f6fa;
+            background: #f0f6fa;
             margin: 0;
             padding: 20px;
             color: #263746;
@@ -36,18 +36,18 @@
 
         header p {
             margin: 0;
-            font-size: 16px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 850px;
+            max-width: 1000px;
             margin: auto;
         }
 
         .card {
             background: white;
             padding: 25px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             border-radius: 12px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
         }
@@ -57,14 +57,19 @@
             margin-top: 0;
         }
 
+        h3 {
+            color: #087f8c;
+            margin-top: 25px;
+        }
+
         .form-group {
             margin-bottom: 18px;
         }
 
         label {
             display: block;
-            margin-bottom: 7px;
             font-weight: bold;
+            margin-bottom: 8px;
         }
 
         input,
@@ -74,13 +79,29 @@
             border: 1px solid #cbd5df;
             border-radius: 6px;
             font-size: 15px;
-            background-color: white;
+            background: white;
         }
 
         input:focus,
         select:focus {
             outline: none;
             border-color: #087f8c;
+        }
+
+        .question {
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #f7fafc;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+        }
+
+        .question label {
+            line-height: 1.5;
+        }
+
+        .question select {
+            margin-top: 5px;
         }
 
         button {
@@ -92,31 +113,52 @@
             margin: 5px 5px 5px 0;
         }
 
-        .add-btn {
-            background-color: #087f8c;
-            color: white;
-        }
-
-        .export-btn {
-            background-color: #218838;
-            color: white;
-        }
-
-        .clear-btn {
-            background-color: #dc3545;
-            color: white;
-        }
-
         button:hover {
             opacity: 0.85;
         }
 
+        .add-btn {
+            background: #087f8c;
+            color: white;
+        }
+
+        .export-btn {
+            background: #218838;
+            color: white;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            padding: 7px 10px;
+        }
+
         .counter {
-            background-color: #e1f5f5;
+            background: #e1f5f5;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 15px;
             font-weight: bold;
+        }
+
+        .summary {
+            background: #eaf7f7;
+            border-left: 5px solid #087f8c;
+            padding: 16px;
+            border-radius: 6px;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        .message {
+            margin-top: 12px;
+            font-weight: bold;
+            line-height: 1.6;
         }
 
         .table-container {
@@ -127,33 +169,33 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
+            min-width: 700px;
         }
 
         th,
         td {
-            padding: 12px;
             border: 1px solid #ddd;
+            padding: 10px;
             text-align: center;
+            font-size: 13px;
         }
 
         th {
-            background-color: #087f8c;
+            background: #087f8c;
             color: white;
         }
 
         tr:nth-child(even) {
-            background-color: #f5f9fb;
+            background: #f5f9fb;
         }
 
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
-            padding: 7px 10px;
-        }
-
-        .message {
-            margin-top: 12px;
-            font-weight: bold;
+        .notice {
+            background: #fff3cd;
+            color: #664d03;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.7;
+            margin-bottom: 20px;
         }
 
         footer {
@@ -161,6 +203,7 @@
             color: #667784;
             margin-top: 25px;
             font-size: 13px;
+            line-height: 1.7;
         }
 
         @media (max-width: 600px) {
@@ -181,306 +224,705 @@
 
 <body>
 
-    <header>
-        <h1>Digital Health Assessment</h1>
-        <p>Medical Data Collection and Management</p>
-    </header>
+<header>
+    <h1>Digital Health Assessment</h1>
+    <p>Influenza Symptoms Questionnaire and Medical Data Collection</p>
+</header>
 
-    <div class="container">
+<div class="container">
 
-        <section class="card">
-
-            <h2>Patient Information</h2>
-
-            <form id="medicalForm">
-
-                <div class="form-group">
-                    <label for="recordId">Record ID:</label>
-                    <input
-                        type="text"
-                        id="recordId"
-                        placeholder="Enter record ID"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="age">Age:</label>
-                    <input
-                        type="number"
-                        id="age"
-                        min="0"
-                        max="120"
-                        placeholder="Enter age"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="gender">Gender:</label>
-
-                    <select id="gender" required>
-                        <option value="">Select gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="bloodPressure">
-                        Systolic Blood Pressure (mmHg):
-                    </label>
-
-                    <input
-                        type="number"
-                        id="bloodPressure"
-                        min="50"
-                        max="300"
-                        placeholder="Example: 120"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="glucose">
-                        Blood Glucose Level (mg/dL):
-                    </label>
-
-                    <input
-                        type="number"
-                        id="glucose"
-                        min="20"
-                        max="1000"
-                        placeholder="Enter glucose level"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="risk">Medical Risk Category:</label>
-
-                    <select id="risk" required>
-                        <option value="">Select risk category</option>
-                        <option value="Low">Low</option>
-                        <option value="Moderate">Moderate</option>
-                        <option value="High">High</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="add-btn">
-                    Add Record
-                </button>
-
-            </form>
-
-            <p id="message" class="message"></p>
-
-        </section>
-
-        <section class="card">
-
-            <h2>Medical Records</h2>
-
-            <div class="counter">
-                Total Records:
-                <span id="recordCount">0</span>
-            </div>
-
-            <button
-                type="button"
-                class="export-btn"
-                onclick="exportCSV()"
-            >
-                Export to CSV
-            </button>
-
-            <button
-                type="button"
-                class="clear-btn"
-                onclick="clearRecords()"
-            >
-                Clear All Records
-            </button>
-
-            <div class="table-container">
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Record ID</th>
-                            <th>Age</th>
-                            <th>Gender</th>
-                            <th>Systolic BP</th>
-                            <th>Glucose</th>
-                            <th>Risk</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="recordsTable"></tbody>
-                </table>
-
-            </div>
-
-        </section>
-
+    <div class="notice">
+        <strong>Educational notice:</strong>
+        This questionnaire collects information about influenza-like
+        symptoms. It does not confirm influenza or replace a medical
+        examination.
     </div>
 
-    <footer>
-        <p>Digital Health Assessment | Educational Use Only</p>
-        <p>
-            This application collects data and does not provide a medical diagnosis.
-        </p>
-    </footer>
+    <section class="card">
 
-    <script>
-        const form = document.getElementById("medicalForm");
-        const recordsTable = document.getElementById("recordsTable");
-        const recordCount = document.getElementById("recordCount");
-        const message = document.getElementById("message");
+        <h2>1. Patient Information</h2>
 
-        let records = [];
+        <form id="medicalForm">
 
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
+            <div class="form-group">
+                <label for="recordId">Record ID:</label>
+                <input
+                    type="text"
+                    id="recordId"
+                    placeholder="Enter a unique record ID"
+                    required
+                >
+            </div>
 
-            const record = {
-                id: document.getElementById("recordId").value.trim(),
-                age: Number(document.getElementById("age").value),
-                gender: document.getElementById("gender").value,
-                bloodPressure: Number(
-                    document.getElementById("bloodPressure").value
-                ),
-                glucose: Number(
-                    document.getElementById("glucose").value
-                ),
-                risk: document.getElementById("risk").value
-            };
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input
+                    type="number"
+                    id="age"
+                    min="0"
+                    max="120"
+                    placeholder="Enter age"
+                    required
+                >
+            </div>
 
-            if (records.some(item => item.id === record.id)) {
-                message.style.color = "red";
-                message.textContent =
-                    "Error: This Record ID already exists.";
-                return;
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+
+                <select id="gender" required>
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <h2>2. Influenza Symptoms</h2>
+
+            <p>
+                Select the answer that best describes the patient's
+                current symptoms.
+            </p>
+
+            <div id="symptomsContainer"></div>
+
+            <h2>3. Additional Questions</h2>
+
+            <div class="form-group">
+                <label for="duration">
+                    How long have the symptoms lasted?
+                </label>
+
+                <select id="duration" required>
+                    <option value="">Select duration</option>
+                    <option value="Less than 24 hours">
+                        Less than 24 hours
+                    </option>
+                    <option value="1-3 days">1-3 days</option>
+                    <option value="4-7 days">4-7 days</option>
+                    <option value="More than 7 days">
+                        More than 7 days
+                    </option>
+                    <option value="No symptoms">
+                        No symptoms
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="suddenOnset">
+                    Did the symptoms start suddenly?
+                </label>
+
+                <select id="suddenOnset" required>
+                    <option value="">Select answer</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Not sure">Not sure</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">
+                    Have you been in contact with someone who was sick?
+                </label>
+
+                <select id="contact" required>
+                    <option value="">Select answer</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Not sure">Not sure</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="vaccine">
+                    Have you received the influenza vaccine this season?
+                </label>
+
+                <select id="vaccine" required>
+                    <option value="">Select answer</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Not sure">Not sure</option>
+                </select>
+            </div>
+
+            <button type="submit" class="add-btn">
+                Add Medical Record
+            </button>
+
+        </form>
+
+        <p id="message" class="message"></p>
+
+        <div id="summary" class="summary" hidden></div>
+
+    </section>
+
+    <section class="card">
+
+        <h2>4. Collected Medical Records</h2>
+
+        <div class="counter">
+            Total Records:
+            <span id="recordCount">0</span>
+        </div>
+
+        <button
+            type="button"
+            class="export-btn"
+            onclick="exportCSV()"
+        >
+            Export to CSV
+        </button>
+
+        <button
+            type="button"
+            class="clear-btn"
+            onclick="clearRecords()"
+        >
+            Clear All Records
+        </button>
+
+        <div class="table-container">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Record ID</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Positive Symptoms</th>
+                        <th>Symptom Count</th>
+                        <th>Duration</th>
+                        <th>Sudden Onset</th>
+                        <th>Contact</th>
+                        <th>Vaccinated</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="recordsTable"></tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+<footer>
+    <p>Digital Health Assessment</p>
+    <p>Educational use only — not a diagnostic tool.</p>
+</footer>
+
+<script>
+
+    const symptoms = [
+        {
+            id: "fever",
+            label: "1. Fever"
+        },
+        {
+            id: "chills",
+            label: "2. Chills"
+        },
+        {
+            id: "fatigue",
+            label: "3. Fatigue or unusual tiredness"
+        },
+        {
+            id: "headache",
+            label: "4. Headache"
+        },
+        {
+            id: "bodyAches",
+            label: "5. Muscle or body aches"
+        },
+        {
+            id: "cough",
+            label: "6. Cough"
+        },
+        {
+            id: "soreThroat",
+            label: "7. Sore throat"
+        },
+        {
+            id: "runnyNose",
+            label: "8. Runny nose"
+        },
+        {
+            id: "nasalCongestion",
+            label: "9. Nasal congestion"
+        },
+        {
+            id: "shortnessBreath",
+            label: "10. Shortness of breath"
+        },
+        {
+            id: "chestPain",
+            label: "11. Chest pain or discomfort"
+        },
+        {
+            id: "nauseaVomiting",
+            label: "12. Nausea or vomiting"
+        },
+        {
+            id: "diarrhea",
+            label: "13. Diarrhea"
+        },
+        {
+            id: "appetiteLoss",
+            label: "14. Loss of appetite"
+        }
+    ];
+
+    const symptomsContainer =
+        document.getElementById("symptomsContainer");
+
+    const form = document.getElementById("medicalForm");
+
+    const recordsTable =
+        document.getElementById("recordsTable");
+
+    const recordCount =
+        document.getElementById("recordCount");
+
+    const message =
+        document.getElementById("message");
+
+    const summary =
+        document.getElementById("summary");
+
+    let records = [];
+
+    // Generate the symptom questions automatically.
+    symptoms.forEach(function(symptom) {
+
+        const question = document.createElement("div");
+        question.className = "question";
+
+        const label = document.createElement("label");
+        label.htmlFor = symptom.id;
+        label.textContent = symptom.label;
+
+        const select = document.createElement("select");
+        select.id = symptom.id;
+        select.required = true;
+
+        const options = [
+            {
+                value: "",
+                text: "Select answer"
+            },
+            {
+                value: "Yes",
+                text: "Yes"
+            },
+            {
+                value: "No",
+                text: "No"
+            },
+            {
+                value: "Not sure",
+                text: "Not sure"
             }
+        ];
 
-            records.push(record);
+        options.forEach(function(optionData) {
 
-            displayRecords();
-            form.reset();
+            const option = document.createElement("option");
 
-            message.style.color = "green";
-            message.textContent = "Record added successfully!";
+            option.value = optionData.value;
+            option.textContent = optionData.text;
+
+            select.appendChild(option);
+
         });
 
-        function displayRecords() {
-            recordsTable.innerHTML = "";
+        question.appendChild(label);
+        question.appendChild(select);
 
-            records.forEach(function(record, index) {
-                const row = document.createElement("tr");
+        symptomsContainer.appendChild(question);
 
-                const values = [
-                    record.id,
-                    record.age,
-                    record.gender,
-                    record.bloodPressure,
-                    record.glucose,
-                    record.risk
-                ];
+    });
 
-                values.forEach(function(value) {
-                    const cell = document.createElement("td");
-                    cell.textContent = value;
-                    row.appendChild(cell);
-                });
+    // Add a new medical record.
+    form.addEventListener("submit", function(event) {
 
-                const actionCell = document.createElement("td");
-                const deleteButton = document.createElement("button");
+        event.preventDefault();
 
-                deleteButton.textContent = "Delete";
-                deleteButton.className = "delete-btn";
+        const id = document.getElementById("recordId")
+            .value.trim();
 
-                deleteButton.addEventListener("click", function() {
-                    records.splice(index, 1);
-                    displayRecords();
-                    message.textContent = "";
-                });
+        // Prevent duplicate record IDs.
+        if (records.some(function(record) {
+            return record.id.toLowerCase() === id.toLowerCase();
+        })) {
 
-                actionCell.appendChild(deleteButton);
-                row.appendChild(actionCell);
+            message.style.color = "red";
+            message.textContent =
+                "Error: This Record ID already exists.";
 
-                recordsTable.appendChild(row);
-            });
-
-            recordCount.textContent = records.length;
+            return;
         }
 
-        function exportCSV() {
-            if (records.length === 0) {
-                alert("There are no records to export.");
-                return;
+        const age = Number(
+            document.getElementById("age").value
+        );
+
+        if (!Number.isInteger(age) || age < 0 || age > 120) {
+
+            message.style.color = "red";
+            message.textContent =
+                "Please enter a valid age.";
+
+            return;
+        }
+
+        const record = {
+            id: id,
+
+            age: age,
+
+            gender: document.getElementById("gender").value,
+
+            symptoms: {},
+
+            duration: document.getElementById("duration").value,
+
+            suddenOnset: document.getElementById("suddenOnset").value,
+
+            contact: document.getElementById("contact").value,
+
+            vaccine: document.getElementById("vaccine").value
+        };
+
+        let positiveCount = 0;
+        let positiveSymptoms = [];
+
+        symptoms.forEach(function(symptom) {
+
+            const answer =
+                document.getElementById(symptom.id).value;
+
+            record.symptoms[symptom.id] = answer;
+
+            if (answer === "Yes") {
+
+                positiveCount++;
+
+                positiveSymptoms.push(symptom.label);
+
             }
 
-            const headers = [
-                "Record ID",
-                "Age",
-                "Gender",
-                "Systolic Blood Pressure",
-                "Blood Glucose Level",
-                "Medical Risk Category"
+        });
+
+        record.positiveCount = positiveCount;
+
+        record.positiveSymptoms = positiveSymptoms;
+
+        records.push(record);
+
+        displayRecords();
+
+        showSummary(record);
+
+        form.reset();
+
+        message.style.color = "green";
+
+        message.textContent =
+            "Medical record added successfully.";
+
+    });
+
+    // Display all records in the table.
+    function displayRecords() {
+
+        recordsTable.innerHTML = "";
+
+        records.forEach(function(record, index) {
+
+            const row = document.createElement("tr");
+
+            const positiveText =
+                record.positiveSymptoms.length > 0
+                    ? record.positiveSymptoms
+                        .map(function(item) {
+                            return item.replace(/^\d+\.\s*/, "");
+                        })
+                        .join(", ")
+                    : "None reported";
+
+            const values = [
+                record.id,
+                record.age,
+                record.gender,
+                positiveText,
+                record.positiveCount,
+                record.duration,
+                record.suddenOnset,
+                record.contact,
+                record.vaccine
             ];
 
-            const rows = records.map(function(record) {
-                return [
-                    record.id,
-                    record.age,
-                    record.gender,
-                    record.bloodPressure,
-                    record.glucose,
-                    record.risk
-                ];
+            values.forEach(function(value) {
+
+                const cell = document.createElement("td");
+
+                cell.textContent = value;
+
+                row.appendChild(cell);
+
             });
 
-            const csvContent = [headers, ...rows]
-                .map(row =>
-                    row.map(value =>
-                        '"' + String(value).replace(/"/g, '""') + '"'
-                    ).join(",")
-                )
-                .join("\n");
+            const actionCell = document.createElement("td");
 
-            const blob = new Blob(
-                ["\uFEFF" + csvContent],
-                { type: "text/csv;charset=utf-8;" }
+            const deleteButton =
+                document.createElement("button");
+
+            deleteButton.textContent = "Delete";
+
+            deleteButton.className = "delete-btn";
+
+            deleteButton.addEventListener("click", function() {
+
+                records.splice(index, 1);
+
+                displayRecords();
+
+                summary.hidden = true;
+
+                message.textContent = "";
+
+            });
+
+            actionCell.appendChild(deleteButton);
+
+            row.appendChild(actionCell);
+
+            recordsTable.appendChild(row);
+
+        });
+
+        recordCount.textContent = records.length;
+
+    }
+
+    // Show a descriptive symptom summary.
+    function showSummary(record) {
+
+        summary.hidden = false;
+
+        summary.replaceChildren();
+
+        const title = document.createElement("h3");
+
+        title.textContent = "Symptom Summary";
+
+        summary.appendChild(title);
+
+        const count = document.createElement("p");
+
+        count.textContent =
+            "Number of reported symptoms: " +
+            record.positiveCount +
+            " out of " +
+            symptoms.length;
+
+        summary.appendChild(count);
+
+        const details = document.createElement("p");
+
+        details.textContent =
+            record.positiveSymptoms.length > 0
+                ? "Reported symptoms: " +
+                    record.positiveSymptoms
+                        .map(function(item) {
+                            return item.replace(/^\d+\.\s*/, "");
+                        })
+                        .join(", ")
+                : "No symptoms were marked Yes.";
+
+        summary.appendChild(details);
+
+        const duration = document.createElement("p");
+
+        duration.textContent =
+            "Symptom duration: " + record.duration;
+
+        summary.appendChild(duration);
+
+        const note = document.createElement("p");
+
+        note.textContent =
+            "This summary describes the answers provided. " +
+            "It does not diagnose influenza.";
+
+        summary.appendChild(note);
+
+        const urgentSymptoms = [];
+
+        if (record.symptoms.shortnessBreath === "Yes") {
+            urgentSymptoms.push("shortness of breath");
+        }
+
+        if (record.symptoms.chestPain === "Yes") {
+            urgentSymptoms.push("chest pain or discomfort");
+        }
+
+        if (urgentSymptoms.length > 0) {
+
+            const warning = document.createElement("p");
+
+            warning.style.color = "#b42318";
+
+            warning.style.fontWeight = "bold";
+
+            warning.textContent =
+                "Warning: " +
+                urgentSymptoms.join(" and ") +
+                " can require urgent medical assessment. " +
+                "Seek prompt medical care, especially if symptoms " +
+                "are severe or worsening.";
+
+            summary.appendChild(warning);
+
+        }
+
+    }
+
+    // Export records and all questionnaire answers to CSV.
+    function exportCSV() {
+
+        if (records.length === 0) {
+
+            alert("There are no records to export.");
+
+            return;
+
+        }
+
+        const headers = [
+            "Record ID",
+            "Age",
+            "Gender"
+        ];
+
+        symptoms.forEach(function(symptom) {
+            headers.push(symptom.label);
+        });
+
+        headers.push(
+            "Positive Symptom Count",
+            "Positive Symptoms",
+            "Symptom Duration",
+            "Sudden Onset",
+            "Contact With Sick Person",
+            "Influenza Vaccine"
+        );
+
+        const rows = records.map(function(record) {
+
+            const row = [
+                record.id,
+                record.age,
+                record.gender
+            ];
+
+            symptoms.forEach(function(symptom) {
+
+                row.push(record.symptoms[symptom.id]);
+
+            });
+
+            row.push(
+                record.positiveCount,
+                record.positiveSymptoms
+                    .map(function(item) {
+                        return item.replace(/^\d+\.\s*/, "");
+                    })
+                    .join("; "),
+                record.duration,
+                record.suddenOnset,
+                record.contact,
+                record.vaccine
             );
 
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
+            return row;
 
-            link.href = url;
-            link.download = "digital_health_assessment.csv";
+        });
 
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+        function escapeCSV(value) {
 
+            return '"' +
+                String(value ?? "").replace(/"/g, '""') +
+                '"';
+
+        }
+
+        const csvContent = [headers, ...rows]
+            .map(function(row) {
+                return row.map(escapeCSV).join(",");
+            })
+            .join("\r\n");
+
+        const blob = new Blob(
+            ["\uFEFF" + csvContent],
+            {
+                type: "text/csv;charset=utf-8;"
+            }
+        );
+
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+
+        link.href = url;
+
+        link.download = "influenza_health_assessment.csv";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        setTimeout(function() {
             URL.revokeObjectURL(url);
+        }, 1000);
+
+    }
+
+    // Delete all records after confirmation.
+    function clearRecords() {
+
+        if (records.length === 0) {
+
+            alert("There are no records to clear.");
+
+            return;
+
         }
 
-        function clearRecords() {
-            if (records.length === 0) {
-                alert("There are no records to clear.");
-                return;
-            }
+        if (confirm(
+            "Are you sure you want to delete all medical records?"
+        )) {
 
-            if (confirm("Are you sure you want to delete all records?")) {
-                records = [];
-                displayRecords();
-                message.textContent = "";
-            }
+            records = [];
+
+            displayRecords();
+
+            summary.hidden = true;
+
+            message.textContent = "";
+
         }
-    </script>
+
+    }
+
+</script>
 
 </body>
-
-                    </html>
+    </html>
