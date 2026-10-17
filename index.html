@@ -1,473 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Medical Dataset Collection</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Dataset Collection</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #eef4f9;
-      margin: 0;
-      padding: 25px;
-      color: #243447;
-    }
+body {
+    margin: 0;
+    padding: 20px 12px;
+    font-family: Arial, sans-serif;
+    background: #101820;
+    color: #eef5ff;
+    line-height: 1.6;
+}
 
+.container {
+    max-width: 850px;
+    margin: auto;
+    padding: 25px;
+    background: #1b2733;
+    border-radius: 16px;
+}
+
+h1 {
+    color: #59c3e6;
+    text-align: center;
+}
+
+h2 {
+    color: #8edcf5;
+    border-bottom: 1px solid #435365;
+    padding-bottom: 8px;
+    margin-top: 30px;
+}
+
+p {
+    color: #c1cedc;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+label, legend {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 13px;
+    border-radius: 9px;
+    border: 1px solid #435365;
+    background: #263544;
+    color: white;
+    font-size: 16px;
+}
+
+fieldset {
+    border: 1px solid #435365;
+    border-radius: 10px;
+    margin: 16px 0;
+    padding: 14px;
+}
+
+fieldset label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 8px 18px 5px 0;
+    font-weight: normal;
+}
+
+input[type="radio"] {
+    accent-color: #59c3e6;
+    width: 17px;
+    height: 17px;
+}
+
+button {
+    padding: 13px 18px;
+    margin: 8px 5px 0 0;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.primary {
+    background: #59c3e6;
+    color: #101820;
+}
+
+.secondary {
+    background: #40556a;
+    color: white;
+}
+
+#result {
+    display: none;
+    margin-top: 25px;
+    padding: 18px;
+    background: #103442;
+    border-radius: 10px;
+    border: 1px solid #397b91;
+}
+
+.warning {
+    color: #ffe0a3;
+}
+
+@media (max-width: 600px) {
     .container {
-      max-width: 520px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 3px 12px #ccd5df;
+        padding: 17px;
     }
 
-    h1 {
-      color: #075985;
-      font-size: 24px;
-      text-align: center;
-    }
-
-    .description {
-      color: #526579;
-      line-height: 1.5;
-    }
-
-    label {
-      display: block;
-      margin-top: 16px;
-      font-weight: bold;
-    }
-
-    input,
-    select,
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 7px;
-      font-size: 16px;
-      border-radius: 6px;
-    }
-
-    input,
-    select {
-      border: 1px solid #cbd5e1;
-      background: white;
-    }
-
-    input:focus,
-    select:focus {
-      outline: 2px solid #0878d1;
-      border-color: #0878d1;
+    fieldset label {
+        display: flex;
     }
 
     button {
-      border: 0;
-      background: #0878d1;
-      color: white;
-      cursor: pointer;
-      margin-top: 20px;
-      font-weight: bold;
+        width: 100%;
+        margin: 7px 0;
     }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .secondary {
-      background: #16834a;
-    }
-
-    #message {
-      padding: 10px;
-      border-radius: 6px;
-      overflow-wrap: anywhere;
-    }
-
-    #message.success {
-      color: #166534;
-      background: #dcfce7;
-    }
-
-    #message.error {
-      color: #b91c1c;
-      background: #fee2e2;
-    }
-
-    .hint {
-      color: #64748b;
-      font-size: 13px;
-      margin: 5px 0 0;
-    }
-
-    .counter {
-      text-align: center;
-      background: #f0f9ff;
-      padding: 12px;
-      border-radius: 6px;
-      margin-top: 20px;
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 12px;
-      }
-
-      .container {
-        padding: 18px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <h1>Medical Dataset Collection</h1>
+<h1>Medical Dataset Collection</h1>
 
-  <p class="description">
-    Educational project — use fictional patient records only.
-  </p>
+<p>
+Educational project for collecting fictional patient records
+and studying flu-like symptoms.
+This questionnaire does not provide a medical diagnosis.
+</p>
 
-  <form id="medicalForm" novalidate>
+<form id="medicalForm">
 
-    <label for="record_id">Record ID</label>
-    <input
-      id="record_id"
-      name="record_id"
-      type="text"
-      required
-      maxlength="40"
-      autocomplete="off"
-      placeholder="e.g. P001"
-    >
+<h2>1. Patient Information</h2>
 
-    <label for="age">Age (years)</label>
-    <input
-      id="age"
-      name="age"
-      type="number"
-      min="0"
-      max="120"
-      step="1"
-      required
-    >
+<div class="field">
+<label for="recordId">Record ID</label>
+<input type="text" id="recordId" name="Record ID"
+placeholder="e.g. P001" required>
+</div>
 
-    <p class="hint">
-      Enter a whole number between 0 and 120.
-    </p>
+<div class="field">
+<label for="age">Age (years)</label>
+<input type="number" id="age" name="Age"
+min="0" max="120" step="1" required>
+<p>Enter a whole number between 0 and 120.</p>
+</div>
 
-    <label for="gender">Gender</label>
-    <select id="gender" name="gender" required>
-      <option value="">Select gender</option>
-      <option value="Female">Female</option>
-      <option value="Male">Male</option>
-    </select>
+<div class="field">
+<label for="gender">Gender</label>
+<select id="gender" name="Gender" required>
+<option value="">Select gender</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+</div>
 
-    <label for="systolic_bp">
-      Systolic blood pressure (mmHg)
-    </label>
+<h2>2. General Symptoms</h2>
 
-    <input
-      id="systolic_bp"
-      name="systolic_bp"
-      type="number"
-      min="50"
-      max="300"
-      step="1"
-      required
-    >
+<div id="symptomQuestions"></div>
 
-    <p class="hint">
-      Enter a whole number between 50 and 300.
-    </p>
+<h2>3. Additional Questions</h2>
 
-    <label for="glucose">
-      Blood glucose (mg/dL)
-    </label>
+<div class="field">
+<label for="duration">How long have you had these symptoms?</label>
+<select id="duration" name="Symptom duration" required>
+<option value="">Select duration</option>
+<option value="Less than 3 days">Less than 3 days</option>
+<option value="3-7 days">3–7 days</option>
+<option value="More than 7 days">More than 7 days</option>
+<option value="No symptoms">No symptoms</option>
+</select>
+</div>
 
-    <input
-      id="glucose"
-      name="glucose"
-      type="number"
-      min="20"
-      max="700"
-      step="any"
-      required
-    >
+<div class="field">
+<label for="sudden">Did the symptoms start suddenly?</label>
+<select id="sudden" name="Sudden onset" required>
+<option value="">Select answer</option>
+<option value="Yes">Yes</option>
+<option value="No">No</option>
+<option value="Not sure">Not sure</option>
+</select>
+</div>
 
-    <p class="hint">
-      Enter a value between 20 and 700.
-    </p>
+<div class="field">
+<label>
+Have you recently been in contact with someone
+who had flu-like symptoms?
+</label>
+<select name="Contact with symptomatic person" required>
+<option value="">Select answer</option>
+<option value="Yes">Yes</option>
+<option value="No">No</option>
+<option value="Not sure">Not sure</option>
+</select>
+</div>
 
-    <label for="risk_category">
-      Medical risk category (educational label)
-    </label>
+<div class="field">
+<label>Have you received a flu vaccine this season?</label>
+<select name="Flu vaccine">
+<option value="">Select answer</option>
+<option value="Yes">Yes</option>
+<option value="No">No</option>
+<option value="Not sure">Not sure</option>
+<option value="Prefer not to say">Prefer not to say</option>
+</select>
+</div>
 
-    <select
-      id="risk_category"
-      name="risk_category"
-      required
-    >
-      <option value="">Select category</option>
-      <option value="Low">Low</option>
-      <option value="Medium">Medium</option>
-      <option value="High">High</option>
-      <option value="Unknown">Unknown</option>
-    </select>
+<button type="submit" class="primary">
+Summarize Symptoms
+</button>
 
-    <button type="submit">Add Record</button>
+<button type="button" class="secondary" id="exportButton">
+Export CSV
+</button>
 
-  </form>
+<button type="reset" class="secondary">
+Clear Form
+</button>
 
-  <p id="message" role="status" aria-live="polite"></p>
+</form>
 
-  <div class="counter">
-    Records collected:
-    <strong id="count">0</strong>
-  </div>
+<div id="result" aria-live="polite">
+<h2>Symptom Summary</h2>
+<p id="summaryText"></p>
 
-  <button
-    type="button"
-    class="secondary"
-    id="downloadBtn"
-  >
-    Download CSV Dataset
-  </button>
+<p class="warning">
+Important: A symptom count cannot confirm influenza.
+Similar symptoms may occur with COVID-19 and other illnesses.
+</p>
+
+<p>
+Seek urgent medical care if you experience severe difficulty
+breathing or persistent chest pain.
+</p>
+</div>
 
 </div>
 
 <script>
-  const records = [];
+const symptoms = [
+    ["fever", "Do you have a fever?"],
+    ["chills", "Do you have chills?"],
+    ["fatigue", "Do you feel unusually tired or weak?"],
+    ["headache", "Do you have a headache?"],
+    ["bodyAches", "Do you have muscle or body aches?"],
+    ["cough", "Do you have a cough?"],
+    ["soreThroat", "Do you have a sore throat?"],
+    ["runnyNose", "Do you have a runny nose?"],
+    ["nasalCongestion", "Do you have a blocked or congested nose?"],
+    ["shortnessBreath", "Do you have shortness of breath?"],
+    ["chestPain", "Do you have chest pain or persistent chest discomfort?"],
+    ["nausea", "Do you have nausea or vomiting?"],
+    ["diarrhea", "Do you have diarrhea?"],
+    ["appetiteLoss", "Have you lost your appetite?"]
+];
 
-  const form = document.getElementById("medicalForm");
-  const message = document.getElementById("message");
+const questionsContainer =
+    document.getElementById("symptomQuestions");
 
-  const idInput = document.getElementById("record_id");
-  const ageInput = document.getElementById("age");
-  const genderInput = document.getElementById("gender");
-  const bpInput = document.getElementById("systolic_bp");
-  const glucoseInput = document.getElementById("glucose");
-  const riskInput = document.getElementById("risk_category");
+symptoms.forEach((symptom, index) => {
+    const [key, question] = symptom;
 
-  function showMessage(text, type) {
-    message.textContent = text;
-    message.className = type;
-  }
+    const fieldset = document.createElement("fieldset");
 
-  function isWholeNumber(value) {
-    return Number.isFinite(value) && Number.isInteger(value);
-  }
+    const legend = document.createElement("legend");
+    legend.textContent = `${index + 1}. ${question}`;
+    fieldset.appendChild(legend);
 
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+    ["Yes", "No", "Not sure"].forEach(answer => {
+        const label = document.createElement("label");
 
-    const recordID = idInput.value.trim();
-    const ageText = ageInput.value.trim();
-    const bpText = bpInput.value.trim();
-    const glucoseText = glucoseInput.value.trim();
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = key;
+        radio.value = answer;
+        radio.required = true;
 
-    const age = Number(ageText);
-    const bp = Number(bpText);
-    const glucose = Number(glucoseText);
+        label.appendChild(radio);
+        label.appendChild(document.createTextNode(answer));
 
-    // Check required fields
-    if (
-      recordID === "" ||
-      ageText === "" ||
-      genderInput.value === "" ||
-      bpText === "" ||
-      glucoseText === "" ||
-      riskInput.value === ""
-    ) {
-      showMessage(
-        "Error: Please complete all fields.",
-        "error"
-      );
-      return;
-    }
-
-    // Validate Record ID
-    if (recordID.length > 40) {
-      showMessage(
-        "Error: Record ID must not exceed 40 characters.",
-        "error"
-      );
-      idInput.focus();
-      return;
-    }
-
-    // Validate Age
-    if (
-      !isWholeNumber(age) ||
-      age < 0 ||
-      age > 120
-    ) {
-      showMessage(
-        "Error: Age must be a whole number between 0 and 120.",
-        "error"
-      );
-      ageInput.focus();
-      return;
-    }
-
-    // Validate Blood Pressure
-    if (
-      !isWholeNumber(bp) ||
-      bp < 50 ||
-      bp > 300
-    ) {
-      showMessage(
-        "Error: Blood pressure must be a whole number between 50 and 300.",
-        "error"
-      );
-      bpInput.focus();
-      return;
-    }
-
-    // Validate Blood Glucose
-    if (
-      !Number.isFinite(glucose) ||
-      glucose < 20 ||
-      glucose > 700
-    ) {
-      showMessage(
-        "Error: Blood glucose must be between 20 and 700 mg/dL.",
-        "error"
-      );
-      glucoseInput.focus();
-      return;
-    }
-
-    // Validate Gender
-    const allowedGenders = ["Female", "Male"];
-
-    if (!allowedGenders.includes(genderInput.value)) {
-      showMessage(
-        "Error: Please select Male or Female.",
-        "error"
-      );
-      genderInput.focus();
-      return;
-    }
-
-    // Validate Risk Category
-    const allowedCategories = [
-      "Low",
-      "Medium",
-      "High",
-      "Unknown"
-    ];
-
-    if (!allowedCategories.includes(riskInput.value)) {
-      showMessage(
-        "Error: Please select a valid risk category.",
-        "error"
-      );
-      riskInput.focus();
-      return;
-    }
-
-    // Prevent duplicate Record IDs
-    const normalizedID = recordID.toLowerCase();
-
-    const duplicate = records.some(function(record) {
-      return record.record_id.toLowerCase() === normalizedID;
+        fieldset.appendChild(label);
     });
 
-    if (duplicate) {
-      showMessage(
-        "Error: This Record ID already exists.",
-        "error"
-      );
-      idInput.focus();
-      return;
-    }
+    questionsContainer.appendChild(fieldset);
+});
 
-    // Add valid record
-    const data = {
-      record_id: recordID,
-      age: age,
-      gender: genderInput.value,
-      systolic_bp: bp,
-      glucose: glucose,
-      risk_category: riskInput.value
+const form = document.getElementById("medicalForm");
+const resultBox = document.getElementById("result");
+
+let records = [];
+
+function getRecord() {
+    const data = {};
+
+    new FormData(form).forEach((value, key) => {
+        data[key] = value;
+    });
+
+    let yesCount = 0;
+    const positiveSymptoms = [];
+
+    symptoms.forEach(([key, question]) => {
+        const selected = form.querySelector(
+            `input[name="${key}"]:checked`
+        );
+
+        const answer = selected ? selected.value : "";
+
+        data[question] = answer;
+
+        if (answer === "Yes") {
+            yesCount++;
+            positiveSymptoms.push(question);
+        }
+    });
+
+    data["Number of symptoms answered Yes"] = yesCount;
+    data["Reported symptoms"] = positiveSymptoms.join("; ");
+
+    return {
+        data,
+        yesCount,
+        positiveSymptoms
     };
+}
 
-    records.push(data);
+function saveRecord(record) {
+    const id = record["Record ID"];
 
-    document.getElementById("count").textContent =
-      records.length;
-
-    showMessage(
-      "Record added successfully!",
-      "success"
+    const existingIndex = records.findIndex(
+        item => item["Record ID"] === id
     );
 
-    form.reset();
-  });
+    if (existingIndex >= 0) {
+        records[existingIndex] = record;
+    } else {
+        records.push(record);
+    }
+}
 
-  // Export CSV
-  document.getElementById("downloadBtn")
-    .addEventListener("click", function() {
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
 
-      if (records.length === 0) {
-        alert("Add at least one record first.");
+    const record = getRecord();
+
+    saveRecord(record.data);
+
+    document.getElementById("summaryText").textContent =
+        "Symptoms answered Yes: " +
+        record.yesCount + " out of " + symptoms.length +
+        ". Reported symptoms: " +
+        (record.positiveSymptoms.length
+            ? record.positiveSymptoms.join(", ")
+            : "None reported.");
+
+    resultBox.style.display = "block";
+});
+
+document.getElementById("exportButton")
+.addEventListener("click", function() {
+
+    if (!form.reportValidity()) {
         return;
-      }
+    }
 
-      const columns = [
-        "record_id",
-        "age",
-        "gender",
-        "systolic_bp",
-        "glucose",
-        "risk_category"
-      ];
+    const record = getRecord();
+    saveRecord(record.data);
 
-      function escapeCSV(value) {
-        return '"' +
-          String(value).replace(/"/g, '""') +
-          '"';
-      }
+    const headers = Object.keys(records[0]);
 
-      const csv = [
-        columns.join(","),
-        ...records.map(function(row) {
-          return columns
-            .map(function(column) {
-              return escapeCSV(row[column]);
-            })
-            .join(",");
-        })
-      ].join("\r\n");
+    function escapeCSV(value) {
+        return '"' + String(value ?? "").replace(/"/g, '""') + '"';
+    }
 
-      const blob = new Blob(
-        ["\uFEFF" + csv],
+    const csvRows = [
+        headers.map(escapeCSV).join(","),
+        ...records.map(record =>
+            headers.map(header =>
+                escapeCSV(record[header])
+            ).join(",")
+        )
+    ];
+
+    const csvContent = "\uFEFF" + csvRows.join("\r\n");
+
+    const blob = new Blob(
+        [csvContent],
         { type: "text/csv;charset=utf-8;" }
-      );
+    );
 
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
 
-      link.href = url;
-      link.download = "medical_dataset.csv";
+    link.href = url;
+    link.download = "medical_flu_dataset.csv";
+    link.click();
 
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+    URL.revokeObjectURL(url);
+});
 
-      setTimeout(function() {
-        URL.revokeObjectURL(url);
-      }, 1000);
-    });
+form.addEventListener("reset", function() {
+    resultBox.style.display = "none";
+});
 </script>
 
 </body>
-</html>
+  </html>
