@@ -261,6 +261,7 @@
                     id="age"
                     min="0"
                     max="120"
+                    step="1"
                     placeholder="Enter age"
                     required
                 >
@@ -279,8 +280,7 @@
             <h2>2. Influenza Symptoms</h2>
 
             <p>
-                Select the answer that best describes the patient's
-                current symptoms.
+                Select Yes or No for each symptom.
             </p>
 
             <div id="symptomsContainer"></div>
@@ -302,9 +302,6 @@
                     <option value="More than 7 days">
                         More than 7 days
                     </option>
-                    <option value="No symptoms">
-                        No symptoms
-                    </option>
                 </select>
             </div>
 
@@ -317,7 +314,6 @@
                     <option value="">Select answer</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
-                    <option value="Not sure">Not sure</option>
                 </select>
             </div>
 
@@ -330,7 +326,6 @@
                     <option value="">Select answer</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
-                    <option value="Not sure">Not sure</option>
                 </select>
             </div>
 
@@ -343,7 +338,6 @@
                     <option value="">Select answer</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
-                    <option value="Not sure">Not sure</option>
                 </select>
             </div>
 
@@ -353,7 +347,7 @@
 
         </form>
 
-        <p id="message" class="message"></p>
+        <p id="message" class="message" aria-live="polite"></p>
 
         <div id="summary" class="summary" hidden></div>
 
@@ -417,7 +411,6 @@
 </footer>
 
 <script>
-
     const symptoms = [
         {
             id: "fever",
@@ -480,7 +473,8 @@
     const symptomsContainer =
         document.getElementById("symptomsContainer");
 
-    const form = document.getElementById("medicalForm");
+    const form =
+        document.getElementById("medicalForm");
 
     const recordsTable =
         document.getElementById("recordsTable");
@@ -496,7 +490,7 @@
 
     let records = [];
 
-    // Generate the symptom questions automatically.
+    // Generate symptom questions.
     symptoms.forEach(function(symptom) {
 
         const question = document.createElement("div");
@@ -510,6 +504,7 @@
         select.id = symptom.id;
         select.required = true;
 
+        // Only Yes and No are available as answers.
         const options = [
             {
                 value: "",
@@ -522,10 +517,6 @@
             {
                 value: "No",
                 text: "No"
-            },
-            {
-                value: "Not sure",
-                text: "Not sure"
             }
         ];
 
@@ -555,6 +546,16 @@
         const id = document.getElementById("recordId")
             .value.trim();
 
+        // Check for an empty ID.
+        if (!id) {
+
+            message.style.color = "red";
+            message.textContent =
+                "Please enter a Record ID.";
+
+            return;
+        }
+
         // Prevent duplicate record IDs.
         if (records.some(function(record) {
             return record.id.toLowerCase() === id.toLowerCase();
@@ -567,34 +568,31 @@
             return;
         }
 
-        const age = Number(
-            document.getElementById("age").value
-        );
+        const ageInput = document.getElementById("age");
+        const age = Number(ageInput.value);
 
-        if (!Number.isInteger(age) || age < 0 || age > 120) {
+        if (
+            ageInput.value.trim() === "" ||
+            !Number.isInteger(age) ||
+            age < 0 ||
+            age > 120
+        ) {
 
             message.style.color = "red";
             message.textContent =
-                "Please enter a valid age.";
+                "Please enter a valid age between 0 and 120.";
 
             return;
         }
 
         const record = {
             id: id,
-
             age: age,
-
             gender: document.getElementById("gender").value,
-
             symptoms: {},
-
             duration: document.getElementById("duration").value,
-
             suddenOnset: document.getElementById("suddenOnset").value,
-
             contact: document.getElementById("contact").value,
-
             vaccine: document.getElementById("vaccine").value
         };
 
@@ -619,7 +617,6 @@
         });
 
         record.positiveCount = positiveCount;
-
         record.positiveSymptoms = positiveSymptoms;
 
         records.push(record);
@@ -631,7 +628,6 @@
         form.reset();
 
         message.style.color = "green";
-
         message.textContent =
             "Medical record added successfully.";
 
@@ -682,8 +678,8 @@
             const deleteButton =
                 document.createElement("button");
 
+            deleteButton.type = "button";
             deleteButton.textContent = "Delete";
-
             deleteButton.className = "delete-btn";
 
             deleteButton.addEventListener("click", function() {
@@ -699,7 +695,6 @@
             });
 
             actionCell.appendChild(deleteButton);
-
             row.appendChild(actionCell);
 
             recordsTable.appendChild(row);
@@ -714,11 +709,9 @@
     function showSummary(record) {
 
         summary.hidden = false;
-
         summary.replaceChildren();
 
         const title = document.createElement("h3");
-
         title.textContent = "Symptom Summary";
 
         summary.appendChild(title);
@@ -762,6 +755,7 @@
 
         summary.appendChild(note);
 
+        // Display a warning for potentially urgent symptoms.
         const urgentSymptoms = [];
 
         if (record.symptoms.shortnessBreath === "Yes") {
@@ -777,7 +771,6 @@
             const warning = document.createElement("p");
 
             warning.style.color = "#b42318";
-
             warning.style.fontWeight = "bold";
 
             warning.textContent =
@@ -832,9 +825,7 @@
             ];
 
             symptoms.forEach(function(symptom) {
-
                 row.push(record.symptoms[symptom.id]);
-
             });
 
             row.push(
@@ -880,7 +871,6 @@
         const link = document.createElement("a");
 
         link.href = url;
-
         link.download = "influenza_health_assessment.csv";
 
         document.body.appendChild(link);
@@ -921,8 +911,7 @@
         }
 
     }
-
 </script>
 
 </body>
-    </html>
+                                            </html>
